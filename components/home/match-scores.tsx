@@ -1,20 +1,18 @@
-import React, { useState, useMemo } from "react";
-import { Switch } from "@/components/ui/switch";
-import { Label } from "@/components/ui/label";
-import { Card, CardContent } from "@/components/ui/card";
-import Link from "next/link";
-import { GamesResult } from "@/types/games/games";
 import MatchCardSkeleton from "@/components/skeleton/matchCardSkeleton";
-import TeamScore from "./TeamScore";
+import { CardContent } from "@/components/ui/card";
+import { Label } from "@/components/ui/label";
 import {
   Select,
   SelectContent,
-  SelectGroup,
   SelectItem,
-  SelectLabel,
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { Switch } from "@/components/ui/switch";
+import { GamesResult } from "@/types/games/games";
+import Link from "next/link";
+import React, { useMemo, useState } from "react";
+import TeamScore from "./TeamScore";
 
 interface MatchScoresProps {
   matchResult: GamesResult | null;
@@ -140,5 +138,4 @@ const MatchScores: React.FC<MatchScoresProps> = ({ matchResult }) => {
     </div>
   );
 };
-
 export default MatchScores;
