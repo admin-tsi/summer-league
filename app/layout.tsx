@@ -5,6 +5,8 @@ import "./globals.css";
 import { cn } from "@/lib/utils";
 import React from "react";
 import { Toaster } from "sonner";
+import Header from "@/components/header";
+import Footer from "@/components/footer";
 
 const cabinetGroteskFont = localFont({
   variable: "--cabinet-grotesk-font",
@@ -41,8 +43,12 @@ export default async function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning={true}>
       <body className={cn(cabinetGroteskFont.className, satoshiFont.className)}>
-        {children}
-        <Toaster className="font-satoshi" />
+        <div className="relative">
+          <Header />
+          {children}
+          <Footer />
+          <Toaster className="font-satoshi" />
+        </div>
       </body>
     </html>
   );
