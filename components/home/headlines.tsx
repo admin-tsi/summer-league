@@ -8,7 +8,7 @@ interface HeadlinesProps {
 
 const Headlines: React.FC<HeadlinesProps> = ({ headlines }) => {
   return (
-    <Card className="bg-card text-card-foreground">
+    <Card className="bg-card h-fit text-card-foreground">
       <CardHeader>
         <CardTitle>Headlines</CardTitle>
       </CardHeader>

@@ -42,7 +42,7 @@ type MatchesListProps = {
 
 const MatchesList: React.FC<MatchesListProps> = ({ matches }) => {
   return (
-    <div className="w-full container mx-auto py-10">
+    <div className="w-full container mx-auto py-6">
       <div className="w-full grid grid-cols-1">
         <span className="text-2xl font-bold">Match Schedule</span>
         <span className="text-xs">View all matches</span>

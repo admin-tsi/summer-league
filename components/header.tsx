@@ -3,13 +3,22 @@ import React, { useState } from "react";
 import Link from "next/link";
 import logo from "@/public/logo.svg";
 import Image from "next/image";
-import { navItems } from "@/constants/header/navItem";
 
 const Header: React.FC = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
+  const navItems = [
+    "Games",
+    "Schedules",
+    "News",
+    "Stats",
+    "Teams",
+    "Players",
+    "Store",
+  ];
+
   return (
-    <header className="fixed top-0 z-50 text-secondary py-8 px-4 md:px-8 w-full">
+    <header className="bg-border text-secondary py-4 px-4 md:px-8">
       <nav className="flex justify-between items-center max-w-7xl mx-auto">
         <div className="w-32 h-8 md:w-40 relative">
           <Image

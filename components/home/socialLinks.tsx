@@ -3,7 +3,7 @@ import { Card, CardHeader, CardTitle, CardContent } from "../ui/card";
 import Link from "next/link";
 
 const SocialLinks: React.FC = () => (
-  <Card className="bg-card text-card-foreground">
+  <Card className="bg-card text-card-foreground h-fit">
     <CardHeader>
       <CardTitle>Follow the Summer League</CardTitle>
     </CardHeader>
