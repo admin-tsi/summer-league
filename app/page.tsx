@@ -1,13 +1,13 @@
 "use client";
-import { getAllBlogArticles } from "@/api/blog/blog";
-import { getAllCompetition } from "@/api/competition/competition";
-import { getTodayGame } from "@/api/games/games";
+import { getAllBlogArticles } from "@/lib/api/blog/blog";
+import { getAllCompetition } from "@/lib/api/competition/competition";
 import Hero from "@/components/home/hero";
 import LatestNews from "@/components/home/latest-news";
 import MatchesList from "@/components/home/today-list";
 import { Articles } from "@/lib/types/blog/blog";
 import React, { useEffect, useState } from "react";
 import { Matchs } from "@/lib/types/games/games";
+import { getTodayGame } from "@/lib/api/games/games";
 
 const HomePage: React.FC = () => {
   const [headlines, setHeadlines] = useState<Articles | null>(null);

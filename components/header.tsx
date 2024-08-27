@@ -3,10 +3,10 @@ import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import logo from "@/public/logo.svg";
-import { getAllGameResults } from "@/api/games/games";
-import { getAllCompetition } from "@/api/competition/competition";
+import { getAllCompetition } from "@/lib/api/competition/competition";
 import { GamesResult } from "@/lib/types/games/games";
 import MatchScores from "@/components/home/match-scores";
+import { getAllGameResults } from "@/lib/api/games/games";
 
 const Header: React.FC = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
