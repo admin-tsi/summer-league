@@ -1,4 +1,4 @@
-import MatchCardSkeleton from "@/components/skeleton/matchCardSkeleton";
+import MatchCardSkeleton from "@/components/home/skeleton/match-card-skeleton";
 import { CardContent } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import {
@@ -9,10 +9,10 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Switch } from "@/components/ui/switch";
-import { GamesResult } from "@/types/games/games";
 import Link from "next/link";
-import React, { useMemo, useState } from "react";
-import TeamScore from "./TeamScore";
+import React, { useMemo, useState, useEffect } from "react";
+import TeamScore from "./team-score";
+import { GamesResult } from "@/lib/types/games/games";
 
 interface MatchScoresProps {
   matchResult: GamesResult | null;
@@ -40,30 +40,36 @@ const MatchScores: React.FC<MatchScoresProps> = ({ matchResult }) => {
   const scheduleDates = useMemo(() => {
     if (!matchResult) return [];
     const dates = Array.from(
-      new Set(matchResult.map((match) => formatDate(match.scheduleId.date)))
+      new Set(matchResult.map((match) => formatDate(match.scheduleId.date))),
     );
     return dates.sort((a, b) => new Date(b).getTime() - new Date(a).getTime());
   }, [matchResult]);
+
+  useEffect(() => {
+    if (scheduleDates.length > 0 && !selectedDate) {
+      setSelectedDate(scheduleDates[0]);
+    }
+  }, [scheduleDates, selectedDate]);
 
   const recentMatches = useMemo(() => {
     if (!matchResult) return [];
     let filteredMatches = matchResult;
     if (selectedDate) {
       filteredMatches = matchResult.filter(
-        (match) => formatDate(match.scheduleId.date) === selectedDate
+        (match) => formatDate(match.scheduleId.date) === selectedDate,
       );
     }
     return filteredMatches
       .sort(
         (a, b) =>
           new Date(b.scheduleId.date).getTime() -
-          new Date(a.scheduleId.date).getTime()
+          new Date(a.scheduleId.date).getTime(),
       )
       .slice(0, 3);
   }, [matchResult, selectedDate]);
 
   return (
-    <div className="border-t border-b">
+    <div className="border-t border-b bg-background">
       <div className="container mx-auto px-4 py-4">
         <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between space-y-4 lg:space-y-0">
           <div className="flex flex-col space-y-2 w-full lg:w-auto">
@@ -92,15 +98,25 @@ const MatchScores: React.FC<MatchScoresProps> = ({ matchResult }) => {
             </div>
           </div>
           <div className="w-full lg:flex-grow lg:mx-4 overflow-x-auto">
-            <div className="w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 md:gap-6">
+            <div className="w-full flex lg:grid lg:grid-cols-3 gap-4 pb-2 lg:pb-0">
               {isLoading ? (
                 Array(3)
                   .fill(0)
-                  .map((_, index) => <MatchCardSkeleton key={index} />)
+                  .map((_, index) => (
+                    <div
+                      key={index}
+                      className="w-[280px] flex-shrink-0 lg:w-auto"
+                    >
+                      <MatchCardSkeleton />
+                    </div>
+                  ))
               ) : recentMatches.length > 0 ? (
                 recentMatches.map((match, index) => (
-                  <div key={index} className="">
-                    <CardContent className="p-2 h-full w-full flex flex-col justify-between text-xs">
+                  <div
+                    key={index}
+                    className="w-[280px] flex-shrink-0 lg:w-auto"
+                  >
+                    <CardContent className="p-2 h-full w-full flex flex-col justify-between text-xs border-l-4">
                       <div>
                         <TeamScore
                           team={match.homeTeam}
@@ -138,4 +154,5 @@ const MatchScores: React.FC<MatchScoresProps> = ({ matchResult }) => {
     </div>
   );
 };
+
 export default MatchScores;

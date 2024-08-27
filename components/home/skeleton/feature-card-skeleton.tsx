@@ -1,10 +1,10 @@
 import React from "react";
-import { Card, CardContent } from "../ui/card";
-import { Skeleton } from "../ui/skeleton";
+import { Card, CardContent } from "../../ui/card";
+import { Skeleton } from "../../ui/skeleton";
 
 type Props = {};
 
-const FeatureCardSkeleton = (props: Props) => {
+const FeatureCardSkeleton = () => {
   return (
     <Card className="lg:col-span-2 bg-border text-secondary">
       <CardContent className="p-0 relative">

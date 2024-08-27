@@ -1,13 +1,12 @@
 import { FC } from "react";
 import { Card, CardHeader, CardTitle, CardContent } from "../ui/card";
-import Link from "next/link";
-import { Matchs } from "@/types/games/games";
+import { Matchs } from "@/lib/types/games/games";
 
-type MacthOfTheDayProps = {
+type MatchOfTheDayProps = {
   matches: Matchs | null;
 };
 
-const MacthOfTheDay: FC<MacthOfTheDayProps> = ({ matches }) => (
+const MatchOfTheDay: FC<MatchOfTheDayProps> = ({ matches }) => (
   <Card className="bg-card text-card-foreground">
     <CardHeader>
       <CardTitle>Match of today</CardTitle>
@@ -35,4 +34,4 @@ const MacthOfTheDay: FC<MacthOfTheDayProps> = ({ matches }) => (
   </Card>
 );
 
-export default MacthOfTheDay;
+export default MatchOfTheDay;

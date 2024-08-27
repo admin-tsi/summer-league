@@ -1,19 +1,19 @@
-import { Facebook, Twitter, Instagram, Youtube, Linkedin } from "lucide-react";
+import { Facebook, Instagram, Linkedin } from "lucide-react";
 
 export const SOCIAL_LINKS = [
   {
     name: "Facebook",
-    url: "https://facebook.com/summerleague",
+    url: "https://www.facebook.com/profile.php?id=61561513250675",
     Icon: Facebook,
   },
   {
     name: "Instagram",
-    url: "https://instagram.com/summerleague",
+    url: "https://www.instagram.com/iamianfoundation?igsh=MTN3aW1uazBxaW11bQ==",
     Icon: Instagram,
   },
   {
     name: "LinkedIn",
-    url: "https://linkedin.com/company/summerleague",
+    url: "https://www.linkedin.com/company/i-am-foundation-by-ian",
     Icon: Linkedin,
   },
 ];

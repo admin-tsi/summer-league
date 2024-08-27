@@ -1,11 +1,10 @@
-import { Articles } from "@/types/blog/blog";
-import { GamesResult } from "@/types/games/games";
+import { Articles } from "@/lib/types/blog/blog";
 import axios, { AxiosResponse } from "axios";
 
 const baseUrl: string = process.env.NEXT_PUBLIC_BASE_URL || "";
 
 export async function getAllBlogArticles(
-  competitionId: string
+  competitionId: string,
 ): Promise<Articles> {
   const url: string = `${baseUrl}/blog/specific/competition?competId=${competitionId}`;
 
@@ -23,7 +22,7 @@ export async function getAllBlogArticles(
     .catch((error: any) => {
       if (axios.isAxiosError(error) && error.response) {
         throw new Error(
-          `${error.response.data.message || error.response.statusText}`
+          `${error.response.data.message || error.response.statusText}`,
         );
       } else {
         throw new Error("Failed to get blog article: Network or server error");

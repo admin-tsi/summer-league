@@ -1,9 +1,9 @@
 import axios, { AxiosResponse } from "axios";
-import { Game, Schedule } from "@/lib/types/schedules/schedules";
+import { Schedule } from "@/lib/types/schedules/schedules";
 
 const baseUrl: string = process.env.NEXT_PUBLIC_BASE_URL || "";
 export async function getAllSchedules(
-  competitionId: string,
+  competitionId: string | null,
 ): Promise<Schedule[]> {
   try {
     const response: AxiosResponse<Schedule[]> = await axios.get(
@@ -30,7 +30,7 @@ export async function getAllSchedules(
 
 export async function getScheduleResultById(
   scheduleId: string,
-  competitionId: string,
+  competitionId: string | null,
 ): Promise<Schedule> {
   try {
     const response: AxiosResponse<Schedule> = await axios.get(

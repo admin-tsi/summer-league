@@ -1,6 +1,6 @@
 import React from "react";
 import { Card, CardHeader, CardTitle, CardContent } from "../ui/card";
-import { Articles } from "@/types/blog/blog";
+import { Articles } from "@/lib/types/blog/blog";
 
 interface HeadlinesProps {
   headlines: Articles | null;
@@ -15,7 +15,7 @@ const Headlines: React.FC<HeadlinesProps> = ({ headlines }) => {
       <CardContent>
         <ul className="space-y-2 flex-col">
           {headlines && headlines.length > 0 ? (
-            headlines.slice(0, 8).map((article, i) => (
+            headlines.slice(0, 8).map((article) => (
               <li key={article._id} className="text-sm py-1">
                 {article.title}
               </li>

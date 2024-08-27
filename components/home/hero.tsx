@@ -1,9 +1,9 @@
 import Image from "next/image";
 import React from "react";
 import mediaday from "../../public/mediaday.jpg";
-import SocialLinks from "./socialLinks";
+import SocialLinks from "./social-links";
 import Headlines from "./headlines";
-import { Articles } from "@/types/blog/blog";
+import { Articles } from "@/lib/types/blog/blog";
 
 type Props = {
   headlines: Articles | null;

@@ -1,9 +1,6 @@
-import Image from "next/image";
-import img from "../../public/3.jpg";
-import LoopingVideo from "./loopingVideo";
-type Props = {};
+import LoopingVideo from "@/components/home/looping-video";
 
-const LatestNews = (props: Props) => {
+const LatestNews = () => {
   return (
     <div className="w-full container mx-auto py-6 h-fit grid grid-cols-1 gap-4">
       <div className="w-full grid grid-cols-1">

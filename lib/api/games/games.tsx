@@ -4,12 +4,11 @@ const baseUrl: string = process.env.NEXT_PUBLIC_BASE_URL || "";
 
 export async function getGameStats(
   gameId: string,
-  teamId: string,
-  competitionId: string,
+  competitionId: string | null,
 ): Promise<GameStats> {
   try {
     const response = await fetch(
-      `${baseUrl}/players-stats/game/${gameId}/team/${teamId}`,
+      `${baseUrl}/players-stats/game/${gameId}/teams-players-stats`,
       {
         method: "GET",
         headers: {

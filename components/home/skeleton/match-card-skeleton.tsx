@@ -6,7 +6,7 @@ type Props = {};
 
 function MatchCardSkeleton({}: Props) {
   return (
-    <Card className="rounded-none border-l first:border-l-0 flex-1 min-w-[150px]">
+    <Card className="rounded-none first:border-0 flex-1 min-w-[150px]">
       <CardContent className="p-2 h-full flex flex-col justify-between">
         <div className="space-y-2">
           <Skeleton className="h-4 w-full" />

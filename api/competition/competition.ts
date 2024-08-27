@@ -1,4 +1,4 @@
-import { CompetitionsResponse } from "@/types/competition/competion";
+import { CompetitionsResponse } from "@/lib/types/competition/competion";
 import axios, { AxiosResponse } from "axios";
 
 const baseUrl: string = process.env.NEXT_PUBLIC_BASE_URL || "";
@@ -13,11 +13,11 @@ export async function getAllCompetition(): Promise<CompetitionsResponse> {
     .catch((error: any) => {
       if (axios.isAxiosError(error) && error.response) {
         throw new Error(
-          `${error.response.data.message || error.response.statusText}`
+          `${error.response.data.message || error.response.statusText}`,
         );
       } else {
         throw new Error(
-          "Failed to get all competion list: Network or server error"
+          "Failed to get all competion list: Network or server error",
         );
       }
     });

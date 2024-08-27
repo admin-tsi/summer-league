@@ -1,5 +1,5 @@
-import { Team } from "@/types/games/games";
 import React from "react";
+import { Team } from "@/lib/types/games/games";
 
 interface TeamScoreProps {
   team: Team;
