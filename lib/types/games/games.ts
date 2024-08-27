@@ -37,17 +37,17 @@ export type Team = {
   teamGender: string;
 };
 
-type Schedule = {
+export type Schedule = {
   _id: string;
   date: string;
 };
 
-type MatchScore = {
+export type MatchScore = {
   home: number;
   away: number;
 };
 
-type Game = {
+export type Game = {
   _id: string;
   homeTeam: Team;
   awayTeam: Team;
@@ -64,7 +64,7 @@ type Game = {
 
 export type GamesResult = Game[];
 
-type ScoreboardOfficer = {
+export type ScoreboardOfficer = {
   _id: string;
   firstName: string;
   lastName: string;
@@ -73,7 +73,7 @@ type ScoreboardOfficer = {
   countryCode: string;
 };
 
-type Match = {
+export type Match = {
   _id: string;
   date: string;
   startTime: string;

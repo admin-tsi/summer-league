@@ -4,7 +4,7 @@ const baseUrl: string = process.env.NEXT_PUBLIC_BASE_URL || "";
 
 export async function getGameStats(
   gameId: string,
-  competitionId: string | null,
+  competitionId: string,
 ): Promise<GameStats> {
   try {
     const response = await fetch(
