@@ -26,7 +26,7 @@ const SchedulePage: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [selectedTeam, setSelectedTeam] = useState<string>("all");
-  const competitionId = localStorage.getItem("competitionId");
+  const competitionId = "66cbbc31b450ee0e0b089f88";
   const router = useRouter();
 
   useEffect(() => {

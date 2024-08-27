@@ -20,7 +20,7 @@ const BoxScorePage: React.FC = () => {
   const [gameStats, setGameStats] = useState<GameStats | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const competitionId = localStorage.getItem("competitionId") || "";
+  const competitionId = "66cbbc31b450ee0e0b089f88";
 
   useEffect(() => {
     const fetchGameStats = async () => {
