@@ -1,6 +1,6 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import {
   Table,
   TableBody,
@@ -11,9 +11,11 @@ import {
   TableFooter,
 } from "@/components/ui/table";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
 import { getGameStats } from "@/lib/api/games/games";
 import { GameStats, TeamStats } from "@/lib/types/games/games";
 import BoxScoreSkeletonLoader from "@/components/schedules/view/box-skeleton-score";
+import { ArrowLeft } from "lucide-react";
 
 const BoxScorePage: React.FC = () => {
   const { gameId } = useParams<{ gameId: string }>();
@@ -21,6 +23,7 @@ const BoxScorePage: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const competitionId = "66cbbc31b450ee0e0b089f88";
+  const router = useRouter();
 
   useEffect(() => {
     const fetchGameStats = async () => {
@@ -135,6 +138,10 @@ const BoxScorePage: React.FC = () => {
     );
   };
 
+  const handleBackToSchedule = () => {
+    router.back();
+  };
+
   if (loading) return <BoxScoreSkeletonLoader />;
   if (error) return <div className="text-destructive">{error}</div>;
   if (!gameStats) return <div>No data available</div>;
@@ -147,6 +154,14 @@ const BoxScorePage: React.FC = () => {
 
   return (
     <div className="container mx-auto px-4 py-8">
+      <Button
+        onClick={handleBackToSchedule}
+        className="mb-4"
+        variant="destructive"
+      >
+        <ArrowLeft />
+        Back to Schedule
+      </Button>
       <h1 className="text-2xl font-bold mb-6 text-center sm:text-left">
         {homeTeamName} vs {awayTeamName} ({city})
       </h1>
@@ -154,7 +169,6 @@ const BoxScorePage: React.FC = () => {
         {renderTeamStats(gameStats.homeTeam, homeTeamName)}
         {renderTeamStats(gameStats.awayTeam, awayTeamName)}
       </div>
-      <div></div>
     </div>
   );
 };

@@ -101,3 +101,89 @@
   background: #555;
 }
 /* Scrollbar */
+
+.noise-container {
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.noise-inner {
+  position: absolute;
+  left: -50%;
+  top: -50%;
+  right: -50%;
+  bottom: -50%;
+  width: 200%;
+  height: 200%;
+  background-image: url(https://upload.wikimedia.org/wikipedia/commons/9/9a/512x512_Dissolve_Noise_Texture.png?20200626210716);
+  background-position: 50% 50%;
+  background-size: auto;
+  opacity: 0.15;
+  animation: bg-animation .2s infinite;
+}
+
+@keyframes bg-animation {
+  0% { transform: translate(0,0) }
+  10% { transform: translate(-5%,-5%) }
+  20% { transform: translate(-10%,5%) }
+  30% { transform: translate(5%,-10%) }
+  40% { transform: translate(-5%,15%) }
+  50% { transform: translate(-10%,5%) }
+  60% { transform: translate(15%,0) }
+  70% { transform: translate(0,10%) }
+  80% { transform: translate(-15%,0) }
+  90% { transform: translate(10%,5%) }
+  100% { transform: translate(5%,0) }
+}
+
+#branch-1 {
+  transform-origin: 50% 100%;
+}
+
+@keyframes to-girl1 {
+  0% {
+    transform-origin: 50% 100%;
+    transform: rotate(-45deg) translate(8%, 9.5%);
+  }
+  100% {
+    transform-origin: 50% 80%;
+    transform: rotate(90deg) translateY(5%);
+  }
+}
+
+
+@keyframes to-boy1 {
+  0% {
+    transform-origin: 50% 80%;
+    transform: rotate(90deg) translateY(5%);
+  }
+  100% {
+    transform-origin: 50% 100%;
+    transform: rotate(-45deg) translate(8%, 9.5%);
+  }
+}
+#branch-2 {
+  transform-origin: 50% 100%;
+}
+
+@keyframes to-girl2 {
+  0% {
+    transform-origin: 50% 100%;
+      transform: rotate(45deg) translate(-8%, 9%);
+  }
+  100% {
+    transform-origin: 50% 80%;
+    transform: rotate(90deg) translateY(5%);
+  }
+}
+
+@keyframes to-boy2 {
+  0% {
+    transform-origin: 50% 80%;
+    transform: rotate(90deg) translateY(5%);
+  }
+  100% {
+    transform-origin: 50% 100%;
+    transform: rotate(45deg) translate(-8%, 9%);
+  }
+}

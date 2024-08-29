@@ -1,5 +1,11 @@
 "use client";
-import React, { useState, useEffect, useMemo, useCallback } from "react";
+import React, {
+  useState,
+  useEffect,
+  useMemo,
+  useCallback,
+  useRef,
+} from "react";
 import { motion } from "framer-motion";
 import { format, parseISO, isToday, isBefore, isAfter } from "date-fns";
 import { Table, TableBody, TableCell, TableRow } from "@/components/ui/table";
@@ -18,16 +24,21 @@ import {
   getAllSchedules,
   getScheduleResultById,
 } from "@/lib/api/schedules/schedules";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import ScheduleSkeleton from "@/components/schedules/schedules-skeleton";
 
 const SchedulePage: React.FC = () => {
   const [schedules, setSchedules] = useState<ScheduleResult[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [selectedTeam, setSelectedTeam] = useState<string>("all");
   const competitionId = "66cbbc31b450ee0e0b089f88";
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  const [selectedTeam, setSelectedTeam] = useState<string>(
+    searchParams.get("team") || "all",
+  );
 
   useEffect(() => {
     const fetchSchedules = async () => {
@@ -55,6 +66,13 @@ const SchedulePage: React.FC = () => {
 
     fetchSchedules();
   }, []);
+
+  useEffect(() => {
+    const scrollPosition = searchParams.get("scrollPosition");
+    if (scrollPosition && containerRef.current) {
+      containerRef.current.scrollTo(0, parseInt(scrollPosition, 10));
+    }
+  }, [searchParams]);
 
   const sortSchedules = (schedules: ScheduleResult[]): ScheduleResult[] => {
     return schedules.sort((a, b) => {
@@ -107,10 +125,18 @@ const SchedulePage: React.FC = () => {
 
   const handleBoxScoreClick = useCallback(
     (gameId: string) => {
-      router.push(`/schedules/${gameId}`);
+      const scrollPosition = containerRef.current?.scrollTop || 0;
+      router.push(
+        `/schedules/${gameId}?team=${selectedTeam}&scrollPosition=${scrollPosition}`,
+      );
     },
-    [router],
+    [router, selectedTeam],
   );
+
+  const handleTeamChange = (value: string) => {
+    setSelectedTeam(value);
+    router.push(`/schedules?team=${value}`);
+  };
 
   const groupedSchedules = groupSchedulesByDate(
     filterSchedulesByTeam(schedules, selectedTeam),
@@ -140,7 +166,10 @@ const SchedulePage: React.FC = () => {
     );
 
   return (
-    <div className="container mx-auto px-2 sm:px-4 py-4 sm:py-8 bg-background text-foreground">
+    <div
+      ref={containerRef}
+      className="container mx-auto px-2 sm:px-4 py-4 sm:py-8 bg-background text-foreground overflow-auto h-screen"
+    >
       <motion.h1
         className="text-2xl sm:text-3xl md:text-4xl font-bold mb-4 sm:mb-8 text-center text-primary"
         initial={{ opacity: 0, y: -50 }}
@@ -154,7 +183,7 @@ const SchedulePage: React.FC = () => {
       ) : (
         <div className="flex flex-col items-start lg:items-center justify-between space-y-4 lg:space-y-0">
           <div className="flex flex-col space-y-2 w-full lg:w-auto mb-4">
-            <Select onValueChange={(value) => setSelectedTeam(value)}>
+            <Select value={selectedTeam} onValueChange={handleTeamChange}>
               <SelectTrigger className="w-full md:w-[300px]">
                 <SelectValue placeholder="Filter by team" />
               </SelectTrigger>

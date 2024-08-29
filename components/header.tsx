@@ -12,7 +12,7 @@ const Header: React.FC = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [matchResult, setMatchResult] = useState<GamesResult | null>(null);
 
-  const navItems = ["Schedules"];
+  const navItems = ["Schedules", "Rankings"];
 
   useEffect(() => {
     const fetchMatchResults = async () => {
