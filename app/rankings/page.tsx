@@ -5,17 +5,7 @@ import { Label } from "@/components/ui/label";
 import { Skeleton } from "@/components/ui/skeleton";
 import { motion, AnimatePresence } from "framer-motion";
 import { getTeamRankingBoys, getTeamRankingGirls } from "@/lib/api/team/team";
-
-interface TeamRanking {
-  teamId: {
-    _id: string;
-    teamName: string;
-  };
-  stats: {
-    wins: number;
-    losses: number;
-  };
-}
+import { TeamRanking } from "@/lib/types/ranking/ranking";
 
 const RankingPage: React.FC = () => {
   const [rankings, setRankings] = useState<TeamRanking[]>([]);
