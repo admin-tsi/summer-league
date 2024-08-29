@@ -12,7 +12,7 @@ const Header: React.FC = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [matchResult, setMatchResult] = useState<GamesResult | null>(null);
 
-  const navItems = ["Schedules"];
+  const navItems = ["Schedules", "Teams"];
 
   useEffect(() => {
     const fetchMatchResults = async () => {
@@ -22,7 +22,7 @@ const Header: React.FC = () => {
 
         const currentYearCompetition = competitions.find(
           (competition) =>
-            new Date(competition.createdAt).getFullYear() === currentYear,
+            new Date(competition.createdAt).getFullYear() === currentYear
         );
 
         if (currentYearCompetition) {
