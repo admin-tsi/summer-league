@@ -21,3 +21,17 @@ export type Team = {
 };
 
 export type TeamList = Team[];
+
+export type TeamStats = {
+  threePoints: number;
+  twoPoints: number;
+  lancerFranc: number;
+  rebonds: number;
+  fouls: number;
+  assists: number;
+  turnOver: number;
+  blocks: number;
+  steal: number;
+  wins: number;
+  losses: number;
+};

@@ -117,6 +117,13 @@ const TeamsPage: React.FC = () => {
                         key={team._id}
                         href={`/teams/${team.teamName
                           .toLowerCase()
+                          .replace(/ /g, "-")}/${team.city
+                          .toLowerCase()
+                          .replace(
+                            / /g,
+                            "-"
+                          )}/${team.teamGender.toLowerCase()}/${team.divisionName
+                          .toLowerCase()
                           .replace(/ /g, "-")}/${team._id}`}
                         className="bg-background p-3 grid grid-cols-1 gap-2 group cursor-pointer shadow-md border-l-4"
                       >

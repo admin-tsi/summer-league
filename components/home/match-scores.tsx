@@ -23,12 +23,14 @@ const MatchScores: React.FC<MatchScoresProps> = ({ matchResult }) => {
   const [selectedDate, setSelectedDate] = useState<string | null>(null);
   const isLoading = !matchResult;
 
-  const formatDate = (dateString: string) => {
+  const formatDate = (dateString: string | undefined) => {
+    if (!dateString) return "";
     const date = new Date(dateString);
     return date.toISOString().split("T")[0];
   };
 
-  const formatDisplayDate = (dateString: string) => {
+  const formatDisplayDate = (dateString: string | undefined) => {
+    if (!dateString) return "Date inconnue";
     const date = new Date(dateString);
     return date.toLocaleDateString("en-US", {
       weekday: "short",
@@ -40,8 +42,8 @@ const MatchScores: React.FC<MatchScoresProps> = ({ matchResult }) => {
   const scheduleDates = useMemo(() => {
     if (!matchResult) return [];
     const dates = Array.from(
-      new Set(matchResult.map((match) => formatDate(match.scheduleId.date))),
-    );
+      new Set(matchResult.map((match) => formatDate(match.scheduleId?.date)))
+    ).filter(Boolean);
     return dates.sort((a, b) => new Date(b).getTime() - new Date(a).getTime());
   }, [matchResult]);
 
@@ -56,15 +58,15 @@ const MatchScores: React.FC<MatchScoresProps> = ({ matchResult }) => {
     let filteredMatches = matchResult;
     if (selectedDate) {
       filteredMatches = matchResult.filter(
-        (match) => formatDate(match.scheduleId.date) === selectedDate,
+        (match) => formatDate(match.scheduleId?.date) === selectedDate
       );
     }
     return filteredMatches
-      .sort(
-        (a, b) =>
-          new Date(b.scheduleId.date).getTime() -
-          new Date(a.scheduleId.date).getTime(),
-      )
+      .sort((a, b) => {
+        const dateA = new Date(a.scheduleId?.date || 0).getTime();
+        const dateB = new Date(b.scheduleId?.date || 0).getTime();
+        return dateB - dateA;
+      })
       .slice(0, 3);
   }, [matchResult, selectedDate]);
 
@@ -120,18 +122,18 @@ const MatchScores: React.FC<MatchScoresProps> = ({ matchResult }) => {
                       <div>
                         <TeamScore
                           team={match.homeTeam}
-                          score={match.matchScore.home}
+                          score={match.matchScore?.home}
                           hideScores={hideScores}
                         />
                         <TeamScore
                           team={match.awayTeam}
-                          score={match.matchScore.away}
+                          score={match.matchScore?.away}
                           hideScores={hideScores}
                         />
                       </div>
                       <div className="text-[10px] text-gray-600">
-                        {match.matchType}, {match.homeTeam.teamGender}{" "}
-                        {formatDisplayDate(match.scheduleId.date)}
+                        {match.matchType}, {match.homeTeam?.teamGender}{" "}
+                        {formatDisplayDate(match.scheduleId?.date)}
                       </div>
                     </CardContent>
                   </div>
