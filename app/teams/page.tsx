@@ -5,7 +5,6 @@ import {
   Accordion,
   AccordionContent,
   AccordionItem,
-  AccordionTrigger,
 } from "@/components/ui/accordion";
 import { getAllSTeams } from "@/lib/api/teams/teams";
 import { SquareArrowOutUpRight, Wind, Flame, Waves } from "lucide-react";
