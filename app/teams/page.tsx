@@ -1,5 +1,4 @@
 "use client";
-
 import React, { useEffect, useState } from "react";
 import { TeamList, Team } from "@/lib/types/teams/teams";
 import {
@@ -9,9 +8,9 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { getAllSTeams } from "@/lib/api/teams/teams";
-import { SquareArrowOutUpRight } from "lucide-react";
+import { SquareArrowOutUpRight, Wind, Flame, Waves } from "lucide-react";
 import { Switch } from "@/components/ui/switch";
-import TeamsListSkeleton from "@/components/home/skeleton/teamsListSkeleton";
+import TeamsListSkeleton from "@/components/home/skeleton/teams-list-skeleton";
 import Link from "next/link";
 
 type Gender = "boys" | "girls";
@@ -39,7 +38,7 @@ const TeamsPage: React.FC = () => {
 
   const groupTeamsByDivision = (
     teams: TeamList,
-    gender: Gender
+    gender: Gender,
   ): Record<string, Team[]> => {
     return teams
       .filter((team) => team.teamGender.toLowerCase() === gender)
@@ -51,8 +50,21 @@ const TeamsPage: React.FC = () => {
           acc[team.divisionName].push(team);
           return acc;
         },
-        {} as Record<string, Team[]>
+        {} as Record<string, Team[]>,
       );
+  };
+
+  const getDivisionIcon = (divisionName: string) => {
+    switch (divisionName) {
+      case "Djo & Ayi":
+        return <Wind size={20} className="ml-4 text-primary-yellow" />;
+      case "Mion":
+        return <Flame size={20} className="ml-4 text-destructive" />;
+      case "Sin":
+        return <Waves size={20} className="ml-4 text-primary" />;
+      default:
+        return null;
+    }
   };
 
   if (error)
@@ -65,7 +77,7 @@ const TeamsPage: React.FC = () => {
   const teamsByDivision = groupTeamsByDivision(teams, selectedGender);
 
   const defaultAccordionValues = Object.keys(teamsByDivision).map(
-    (_, index) => `division-${index}`
+    (_, index) => `division-${index}`,
   );
 
   return (
@@ -107,9 +119,10 @@ const TeamsPage: React.FC = () => {
           {Object.entries(teamsByDivision).map(
             ([division, divisionTeams], divisionIndex) => (
               <AccordionItem value={`division-${divisionIndex}`} key={division}>
-                <AccordionTrigger className="text-1xl font-bold">
+                <div className="flex items-center">
                   {division}
-                </AccordionTrigger>
+                  {getDivisionIcon(division)}
+                </div>
                 <AccordionContent>
                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                     {divisionTeams.map((team) => (
@@ -121,7 +134,7 @@ const TeamsPage: React.FC = () => {
                           .toLowerCase()
                           .replace(
                             / /g,
-                            "-"
+                            "-",
                           )}/${team.teamGender.toLowerCase()}/${team.divisionName
                           .toLowerCase()
                           .replace(/ /g, "-")}/${team._id}`}
@@ -148,7 +161,7 @@ const TeamsPage: React.FC = () => {
                   </div>
                 </AccordionContent>
               </AccordionItem>
-            )
+            ),
           )}
         </Accordion>
       )}

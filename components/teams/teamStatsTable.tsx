@@ -21,7 +21,7 @@ const TeamStatsTable: React.FC<{ stats: TeamStats }> = ({ stats }) => {
         <TableRow className="bg-black hover:bg-black">
           <TableHead className="text-background">Stats</TableHead>
           {keys.map((key) => (
-            <TableHead className="text-background" key={key}>
+            <TableHead className="text-background uppercase" key={key}>
               {key}
             </TableHead>
           ))}

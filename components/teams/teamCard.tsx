@@ -31,15 +31,25 @@ export const TeamCard: React.FC<TeamCardProps> = ({ team }) => (
           </TableRow>
           <TableRow>
             <TableCell className="font-medium">Manager</TableCell>
-            <TableCell>{`${team.teamManager.firstName} ${team.teamManager.lastName}`}</TableCell>
+            <TableCell>
+              {team.teamManager
+                ? `${team.teamManager.firstName} ${team.teamManager.lastName}`
+                : "Non assigné"}
+            </TableCell>
           </TableRow>
           <TableRow>
             <TableCell className="font-medium">Email du manager</TableCell>
-            <TableCell>{team.teamManager.email}</TableCell>
+            <TableCell>
+              {team.teamManager ? team.teamManager.email : "Non disponible"}
+            </TableCell>
           </TableRow>
           <TableRow>
             <TableCell className="font-medium">Spécialisation</TableCell>
-            <TableCell>{team.teamManager.specialization}</TableCell>
+            <TableCell>
+              {team.teamManager
+                ? team.teamManager.specialization
+                : "Non spécifié"}
+            </TableCell>
           </TableRow>
         </TableBody>
       </Table>

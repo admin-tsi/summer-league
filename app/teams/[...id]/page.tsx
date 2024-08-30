@@ -7,9 +7,9 @@ import { getTeamStats } from "@/lib/api/teams/teams";
 import Image from "next/image";
 import img from "../../../public/basketball.jpg";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import TableSkeleton from "@/components/home/skeleton/tableSkeleton";
+import TableSkeleton from "@/components/home/skeleton/table-skeleton";
 import { TeamStats } from "@/lib/types/teams/teams";
-import TeamStatsTable from "@/components/teams/teamStatsTable"; // Assurez-vous que ce chemin d'importation est correct
+import TeamStatsTable from "@/components/teams/teamStatsTable";
 
 const Page: React.FC<{ params: { id: string[] } }> = ({ params }) => {
   const [teamName, city, gender, division, teamId] = params.id;
