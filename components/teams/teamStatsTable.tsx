@@ -40,3 +40,14 @@ const TeamStatsTable: React.FC<{ stats: TeamStats }> = ({ stats }) => {
 };
 
 export default TeamStatsTable;
+import OlokunDepths from "../../public/team-textures/OLOKUN-DEPTHS.png";
+import OgunWarriors from "../../public/team-textures/OGUN-WARRIORS.png";
+import XeviosoArtisans from "../../public/team-textures/XEVIOSO-ARTISANS.png";
+import MawuSunrays from "../../public/team-textures/MAWU-SUNRAYS.png";
+import GletiScholars from "../../public/team-textures/GLETI-SCHOLARS.png";
+import ObatalaTitans from "../../public/team-textures/OBATALA-TITANS.png";
+import LokoRoots from "../../public/team-textures/LOKO-ROOTS.png";
+import LissaRainbows from "../../public/team-textures/LISSA-RAINBOWS.png";
+import GbaduDancers from "../../public/team-textures/GBADU-DANCERS.png";
+import OriDestinies from "../../public/team-textures/ORI-DESTINIES.png";
+import IbejiYouth from "../../public/team-textures/IBEJI-YOUTH.png";

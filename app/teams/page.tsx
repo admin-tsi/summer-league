@@ -11,8 +11,39 @@ import { SquareArrowOutUpRight, Wind, Flame, Waves } from "lucide-react";
 import { Switch } from "@/components/ui/switch";
 import TeamsListSkeleton from "@/components/home/skeleton/teams-list-skeleton";
 import Link from "next/link";
+import YewaGuardians from "../../public/team-textures/YEWA-GUARDIANS.png";
+import OlokunDepths from "../../public/team-textures/OLOKUN-DEPTHS.png";
+import OgunWarriors from "../../public/team-textures/OGUN-WARRIORS.png";
+import XeviosoArtisans from "../../public/team-textures/XEVIOSO-ARTISANS.png";
+import MawuSunrays from "../../public/team-textures/MAWU-SUNRAYS.png";
+import GletiScholars from "../../public/team-textures/GLETI-SCHOLARS.png";
+import ObatalaTitans from "../../public/team-textures/OBATALA-TITANS.png";
+import LokoRoots from "../../public/team-textures/LOKO-ROOTS.png";
+import LissaRainbows from "../../public/team-textures/LISSA-RAINBOWS.png";
+import GbaduDancers from "../../public/team-textures/GBADU-DANCERS.png";
+import OriDestinies from "../../public/team-textures/ORI-DESTINIES.png";
+import IbejiYouth from "../../public/team-textures/IBEJI-YOUTH.png";
+import DamballahWisdom from "../../public/team-textures/DAMBALLAH-WISDOM.png";
+import OrunmilaStars from "../../public/team-textures/ORUNMILA-STARS.png";
 
 type Gender = "boys" | "girls";
+
+const teamImages: { [key: string]: any } = {
+  "YEWA GUARDIANS": YewaGuardians,
+  "OLOKUN DEPTHS": OlokunDepths,
+  "OGUN WARRIORS": OgunWarriors,
+  "XEVIOSO ARTISANS": XeviosoArtisans,
+  "MAWU SUNRAYS": MawuSunrays,
+  "GLETI SCHOLARS": GletiScholars,
+  "OBATALA TITANS": ObatalaTitans,
+  "LOKO ROOTS": LokoRoots,
+  "LISSA RAINBOWS": LissaRainbows,
+  "GBADU DANCERS": GbaduDancers,
+  "ORI DESTINIES": OriDestinies,
+  "IBEJI YOUTH": IbejiYouth,
+  "DAMBALLAH WISDOM": DamballahWisdom,
+  "ORUNMILA STARS": OrunmilaStars,
+};
 
 const TeamsPage: React.FC = () => {
   const [teams, setTeams] = useState<TeamList>([]);
@@ -64,6 +95,10 @@ const TeamsPage: React.FC = () => {
       default:
         return null;
     }
+  };
+
+  const getTeamImage = (teamName: string) => {
+    return teamImages[teamName.toUpperCase()] || YewaGuardians;
   };
 
   if (error)
@@ -118,7 +153,7 @@ const TeamsPage: React.FC = () => {
           {Object.entries(teamsByDivision).map(
             ([division, divisionTeams], divisionIndex) => (
               <AccordionItem value={`division-${divisionIndex}`} key={division}>
-                <div className="flex items-center">
+                <div className="flex items-center mb-2">
                   {division}
                   {getDivisionIcon(division)}
                 </div>
@@ -137,23 +172,32 @@ const TeamsPage: React.FC = () => {
                           )}/${team.teamGender.toLowerCase()}/${team.divisionName
                           .toLowerCase()
                           .replace(/ /g, "-")}/${team._id}`}
-                        className="bg-background p-3 grid grid-cols-1 gap-2 group cursor-pointer shadow-md border-l-4"
+                        className="p-3 grid grid-cols-1 gap-2 group cursor-pointer shadow-md border-l-4 transition-all duration-300 ease-in-out relative overflow-hidden"
                       >
-                        <div className="w-full flex justify-between items-center">
-                          <h3 className="font-medium">{team.teamName}</h3>
-                          <SquareArrowOutUpRight
-                            size={16}
-                            className="hidden group-hover:flex"
-                          />
-                        </div>
-                        <div className="w-full flex items-center gap-3">
-                          <p>City: {team.city}</p>
-                          {team.teamManager && (
-                            <p>
-                              Manager: {team.teamManager.firstName}{" "}
-                              {team.teamManager.lastName}
-                            </p>
-                          )}
+                        <div
+                          className="absolute inset-0 bg-repeat opacity-0 group-hover:opacity-100 transition-opacity duration-300 ease-in-out"
+                          style={{
+                            backgroundImage: `url(${getTeamImage(team.teamName).src})`,
+                            backgroundSize: "100px 100px",
+                          }}
+                        ></div>
+                        <div className="relative z-10 transition-colors duration-300 ease-in-out group-hover:text-white">
+                          <div className="w-full flex justify-between items-center">
+                            <h3 className="font-medium">{team.teamName}</h3>
+                            <SquareArrowOutUpRight
+                              size={16}
+                              className="hidden group-hover:flex"
+                            />
+                          </div>
+                          <div className="w-full flex items-center gap-3">
+                            <p>City: {team.city}</p>
+                            {team.teamManager && (
+                              <p>
+                                Manager: {team.teamManager.firstName}{" "}
+                                {team.teamManager.lastName}
+                              </p>
+                            )}
+                          </div>
                         </div>
                       </Link>
                     ))}
