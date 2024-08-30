@@ -70,6 +70,10 @@ const MatchScores: React.FC<MatchScoresProps> = ({ matchResult }) => {
       .slice(0, 3);
   }, [matchResult, selectedDate]);
 
+  useEffect(() => {
+    console.log("matchResult:", matchResult);
+  }, [matchResult]);
+
   return (
     <div className="border-t border-b bg-background">
       <div className="container mx-auto px-4 py-4">
