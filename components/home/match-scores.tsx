@@ -23,7 +23,8 @@ const MatchScores: React.FC<MatchScoresProps> = ({ matchResult }) => {
   const [selectedDate, setSelectedDate] = useState<string | null>(null);
   const isLoading = !matchResult;
 
-  const formatDate = (dateString: string) => {
+  const formatDate = (dateString: string | undefined) => {
+    if (!dateString) return "";
     const date = new Date(dateString);
     return date.toISOString().split("T")[0];
   };
@@ -40,7 +41,11 @@ const MatchScores: React.FC<MatchScoresProps> = ({ matchResult }) => {
   const scheduleDates = useMemo(() => {
     if (!matchResult) return [];
     const dates = Array.from(
-      new Set(matchResult.map((match) => formatDate(match.scheduleId.date))),
+      new Set(
+        matchResult
+          .map((match) => formatDate(match.scheduleId?.date))
+          .filter(Boolean),
+      ),
     );
     return dates.sort((a, b) => new Date(b).getTime() - new Date(a).getTime());
   }, [matchResult]);
@@ -56,17 +61,21 @@ const MatchScores: React.FC<MatchScoresProps> = ({ matchResult }) => {
     let filteredMatches = matchResult;
     if (selectedDate) {
       filteredMatches = matchResult.filter(
-        (match) => formatDate(match.scheduleId.date) === selectedDate,
+        (match) => formatDate(match.scheduleId?.date) === selectedDate,
       );
     }
     return filteredMatches
       .sort(
         (a, b) =>
-          new Date(b.scheduleId.date).getTime() -
-          new Date(a.scheduleId.date).getTime(),
+          new Date(b.scheduleId?.date || "").getTime() -
+          new Date(a.scheduleId?.date || "").getTime(),
       )
       .slice(0, 3);
   }, [matchResult, selectedDate]);
+
+  useEffect(() => {
+    console.log("matchResult:", matchResult);
+  }, [matchResult]);
 
   return (
     <div className="border-t border-b bg-background">
@@ -131,7 +140,9 @@ const MatchScores: React.FC<MatchScoresProps> = ({ matchResult }) => {
                       </div>
                       <div className="text-[10px] text-gray-600">
                         {match.matchType}, {match.homeTeam.teamGender}{" "}
-                        {formatDisplayDate(match.scheduleId.date)}
+                        {match.scheduleId?.date
+                          ? formatDisplayDate(match.scheduleId.date)
+                          : "Date not available"}
                       </div>
                     </CardContent>
                   </div>
