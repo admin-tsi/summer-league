@@ -30,33 +30,6 @@ export async function getAllSTeams(
   }
 }
 
-// export async function getTeamStats(
-//   competitionId: string | null,
-//   teamId: string | null
-// ): Promise<TeamStats> {
-//   try {
-//     const response: AxiosResponse<TeamStats> = await axios.get(
-//       `${baseUrl}/teams-stats/team/${teamId}`,
-//       {
-//         headers: {
-//           "x-competition-id": competitionId,
-//           "Content-Type": "application/json",
-//         },
-//       }
-//     );
-//     return response.data;
-//   } catch (error) {
-//     if (axios.isAxiosError(error)) {
-//       throw new Error(
-//         error.response?.data.message ||
-//           "An error occurred while fetching this team stats"
-//       );
-//     } else {
-//       throw new Error("A non-Axios error occurred");
-//     }
-//   }
-// }
-
 export async function getTeamStats(
   teamId: string | null,
   competitionId: string | null

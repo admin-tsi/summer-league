@@ -1,3 +1,14 @@
+export type PlayerTeam = {
+  _id: string;
+  teamName: string;
+  city: string;
+};
+
+export type PlayerStatus = {
+  status: boolean;
+  comment?: string;
+};
+
 export type Player = {
   _id: string;
   firstName: string;
@@ -14,17 +25,28 @@ export type Player = {
   countryCode: string;
   phoneNumber: string;
   playerImage: string;
-  playerStatus: {
-    status: boolean;
-    comment?: string;
-  };
+  playerStatus: PlayerStatus;
   saison: string;
-  playerTeam: {
-    _id: string;
-    teamName: string;
-    city: string;
-  };
+  playerTeam: PlayerTeam;
   createdAt: string;
   updatedAt: string;
   __v: number;
 };
+
+export type PlayerStats = {
+  points: number;
+  rebonds: number;
+  fouls: number;
+  assists: number;
+  turnOver: number;
+  blocks: number;
+  steal: number;
+  totalGames: number;
+};
+
+export type BasketballPlayerStats = {
+  player: Player;
+  stats: PlayerStats;
+};
+
+export type BasketballTeamStats = BasketballPlayerStats[];
