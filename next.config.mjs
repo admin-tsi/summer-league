@@ -1,10 +1,12 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  reactStrictMode: true,
   images: {
     domains: [
       "cdn.nba.com",
       "summer-league-storage.s3.eu-north-1.amazonaws.com",
-        "s3-alpha-sig.figma.com",
+      "s3-alpha-sig.figma.com",
+      "cdn.pixabay.com",
     ],
     remotePatterns: [
       {
