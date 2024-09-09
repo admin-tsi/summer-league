@@ -150,7 +150,7 @@ const MatchScores: React.FC<MatchScoresProps> = ({ matchResult }) => {
             </div>
           </div>
           <Link
-            href="#"
+            href="schedules"
             className="text-red-600 font-semibold text-sm whitespace-nowrap lg:ml-4"
           >
             SEE ALL GAMES
