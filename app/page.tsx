@@ -12,23 +12,38 @@ import { getTodayGame } from "@/lib/api/games/games";
 const HomePage: React.FC = () => {
   const [headlines, setHeadlines] = useState<Articles | null>(null);
   const [todayGames, setTodayGames] = useState<Matchs | null>(null);
+  const [isLoadingHeadlines, setIsLoadingHeadlines] = useState(true);
+  const [isLoadingGames, setIsLoadingGames] = useState(true);
 
   useEffect(() => {
     const fetchCompetitions = async () => {
-      const competitions = await getAllCompetition();
-      const currentYear = new Date().getFullYear();
+      try {
+        const competitions = await getAllCompetition();
+        const currentYear = new Date().getFullYear();
+        const currentYearCompetition = competitions.find(
+          (competition) =>
+            new Date(competition.createdAt).getFullYear() === currentYear
+        );
 
-      const currentYearCompetition = competitions.find(
-        (competition) =>
-          new Date(competition.createdAt).getFullYear() === currentYear,
-      );
+        if (currentYearCompetition) {
+          localStorage.setItem("competitionId", currentYearCompetition._id);
 
-      if (currentYearCompetition) {
-        localStorage.setItem("competitionId", currentYearCompetition._id);
-        const headlines = await getAllBlogArticles(currentYearCompetition._id);
-        const todayGames = await getTodayGame(currentYearCompetition._id);
-        setHeadlines(headlines);
-        setTodayGames(todayGames);
+          setIsLoadingHeadlines(true);
+          const headlinesData = await getAllBlogArticles(
+            currentYearCompetition._id
+          );
+          setHeadlines(headlinesData);
+          setIsLoadingHeadlines(false);
+
+          setIsLoadingGames(true);
+          const todayGamesData = await getTodayGame(currentYearCompetition._id);
+          setTodayGames(todayGamesData);
+          setIsLoadingGames(false);
+        }
+      } catch (error) {
+        console.error("Error fetching data:", error);
+        setIsLoadingHeadlines(false);
+        setIsLoadingGames(false);
       }
     };
 
@@ -37,7 +52,7 @@ const HomePage: React.FC = () => {
 
   return (
     <div className="bg-background text-foreground min-h-screen">
-      <Hero headlines={headlines} />
+      <Hero headlines={headlines} isLoading={isLoadingHeadlines} />
       <MatchesList matches={todayGames} />
       <LatestNews />
     </div>
