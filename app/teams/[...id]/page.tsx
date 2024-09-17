@@ -103,9 +103,6 @@ const Page: React.FC<PageProps> = ({ params }) => {
           </div>
         </TabsList>
         <div className="container mx-auto mt-8">
-          /*<TabsContent value="players">
-            {renderContent("Team Players", <PlayerTable players={players} />)}
-          </TabsContent>*/
           <TabsContent value="stats" className="grid grid-cols-1 gap-4">
             {renderContent(
               "Player Statistics",
