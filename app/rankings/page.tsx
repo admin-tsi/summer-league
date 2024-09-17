@@ -6,6 +6,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { motion, AnimatePresence } from "framer-motion";
 import { getTeamRankingBoys, getTeamRankingGirls } from "@/lib/api/team/team";
 import { TeamRanking } from "@/lib/types/ranking/ranking";
+import { WinnerTeam } from "@/components/rankings/winner-team";
 
 const RankingPage: React.FC = () => {
   const [rankings, setRankings] = useState<TeamRanking[]>([]);
@@ -91,38 +92,42 @@ const RankingPage: React.FC = () => {
           </>
         ) : (
           <AnimatePresence>
-            {sortedRankings.map((team, index) => (
-              <motion.div
-                key={team.teamId._id}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -20 }}
-                transition={{ duration: 0.3, delay: index * 0.05 }}
-                className="flex items-center space-x-4"
-              >
-                <div className="flex-shrink-0 w-10 h-10 text-primary rounded-full flex items-center justify-center font-black text-lg">
-                  #{index + 1}
-                </div>
-                <div
-                  className={`flex-1 ${getBackgroundColor(index)} text-primary-green-foreground p-4 sm:p-6 relative overflow-hidden`}
+            {sortedRankings.map((team, index) =>
+              index === 0 ? (
+                <WinnerTeam key={team.teamId._id} team={team} />
+              ) : (
+                <motion.div
+                  key={team.teamId._id}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -20 }}
+                  transition={{ duration: 0.3, delay: index * 0.05 }}
+                  className="flex items-center space-x-4"
                 >
-                  <div className="relative z-10">
-                    <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between">
-                      <span className="font-bold uppercase text-lg sm:text-xl mb-2 sm:mb-0">
-                        {team.teamId.teamName}
-                      </span>
-                      <div className="flex space-x-6 text-base sm:text-lg">
-                        <span>Wins: {team.stats.wins}</span>
-                        <span>Losses: {team.stats.losses}</span>
+                  <div className="flex-shrink-0 w-10 h-10 text-primary rounded-full flex items-center justify-center font-black text-lg">
+                    #{index + 1}
+                  </div>
+                  <div
+                    className={`flex-1 ${getBackgroundColor(index)} text-primary-green-foreground p-4 sm:p-6 relative overflow-hidden`}
+                  >
+                    <div className="relative z-10">
+                      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between">
+                        <span className="font-bold uppercase text-lg sm:text-xl mb-2 sm:mb-0">
+                          {team.teamId.teamName}
+                        </span>
+                        <div className="flex space-x-6 text-base sm:text-lg">
+                          <span>Wins: {team.stats.wins}</span>
+                          <span>Losses: {team.stats.losses}</span>
+                        </div>
                       </div>
                     </div>
+                    <div className="noise-container absolute inset-0">
+                      <div className="noise-inner"></div>
+                    </div>
                   </div>
-                  <div className="noise-container absolute inset-0">
-                    <div className="noise-inner"></div>
-                  </div>
-                </div>
-              </motion.div>
-            ))}
+                </motion.div>
+              ),
+            )}
           </AnimatePresence>
         )}
       </div>

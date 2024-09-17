@@ -8,27 +8,37 @@ import { Articles } from "@/lib/types/blog/blog";
 import React, { useEffect, useState } from "react";
 import { Matchs } from "@/lib/types/games/games";
 import { getTodayGame } from "@/lib/api/games/games";
+import FeaturedArticles from "@/components/home/featured-articles";
 
 const HomePage: React.FC = () => {
   const [headlines, setHeadlines] = useState<Articles | null>(null);
   const [todayGames, setTodayGames] = useState<Matchs | null>(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchCompetitions = async () => {
-      const competitions = await getAllCompetition();
-      const currentYear = new Date().getFullYear();
+      try {
+        const competitions = await getAllCompetition();
+        const currentYear = new Date().getFullYear();
 
-      const currentYearCompetition = competitions.find(
-        (competition) =>
-          new Date(competition.createdAt).getFullYear() === currentYear,
-      );
+        const currentYearCompetition = competitions.find(
+          (competition) =>
+            new Date(competition.createdAt).getFullYear() === currentYear,
+        );
 
-      if (currentYearCompetition) {
-        localStorage.setItem("competitionId", currentYearCompetition._id);
-        const headlines = await getAllBlogArticles(currentYearCompetition._id);
-        const todayGames = await getTodayGame(currentYearCompetition._id);
-        setHeadlines(headlines);
-        setTodayGames(todayGames);
+        if (currentYearCompetition) {
+          localStorage.setItem("competitionId", currentYearCompetition._id);
+          const headlines = await getAllBlogArticles(
+            currentYearCompetition._id,
+          );
+          const todayGames = await getTodayGame(currentYearCompetition._id);
+          setHeadlines(headlines);
+          setTodayGames(todayGames);
+        }
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -40,6 +50,7 @@ const HomePage: React.FC = () => {
       <Hero headlines={headlines} />
       <MatchesList matches={todayGames} />
       <LatestNews />
+      <FeaturedArticles articles={headlines} loading={loading} />
     </div>
   );
 };

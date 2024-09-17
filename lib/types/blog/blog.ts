@@ -13,7 +13,7 @@ type Article = {
   _id: string;
   title: string;
   content: string;
-  author: Author;
+  author: Author | null;
   tags: string[];
   category: string;
   status: "pending" | "published" | "draft";

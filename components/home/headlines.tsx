@@ -1,5 +1,7 @@
 import React from "react";
+import Link from "next/link";
 import { Card, CardHeader, CardTitle, CardContent } from "../ui/card";
+import { Skeleton } from "../ui/skeleton";
 import { Articles } from "@/lib/types/blog/blog";
 
 interface HeadlinesProps {
@@ -7,6 +9,9 @@ interface HeadlinesProps {
 }
 
 const Headlines: React.FC<HeadlinesProps> = ({ headlines }) => {
+  const publishedHeadlines =
+    headlines?.filter((article) => article.status === "published") || [];
+
   return (
     <Card className="bg-card h-fit text-card-foreground">
       <CardHeader>
@@ -14,14 +19,22 @@ const Headlines: React.FC<HeadlinesProps> = ({ headlines }) => {
       </CardHeader>
       <CardContent>
         <ul className="space-y-2 flex-col">
-          {headlines && headlines.length > 0 ? (
-            headlines.slice(0, 8).map((article) => (
+          {publishedHeadlines.length > 0 ? (
+            publishedHeadlines.slice(0, 8).map((article) => (
               <li key={article._id} className="text-sm py-1">
-                {article.title}
+                <Link href={`/articles/${article._id}`} passHref>
+                  <span className="cursor-pointer hover:text-primary transition-colors duration-200 ease-in-out">
+                    {article.title}
+                  </span>
+                </Link>
               </li>
             ))
           ) : (
-            <li className="text-sm text-gray-500">No headlines available</li>
+            <div className="space-y-2">
+              {[...Array(5)].map((_, index) => (
+                <Skeleton key={index} className="h-4 w-full" />
+              ))}
+            </div>
           )}
         </ul>
       </CardContent>
