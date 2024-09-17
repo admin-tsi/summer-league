@@ -6,6 +6,12 @@ const nextConfig = {
       "cdn.nba.com",
       "summer-league-storage.s3.eu-north-1.amazonaws.com",
       "s3-alpha-sig.figma.com",
+      "www.instagram.com",
+      "drive.google.com",
+      "www.flickr.com",
+      "live.staticflickr.com",
+      "web.facebook.com",
+      "s3-alpha-sig.figma.com",
       "cdn.pixabay.com",
     ],
     remotePatterns: [

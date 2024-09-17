@@ -29,3 +29,22 @@ export async function getAllBlogArticles(
       }
     });
 }
+
+export async function getBlogArticleById(articleId: string): Promise<any> {
+  const url: string = `${baseUrl}/blog/${articleId}`;
+
+  return axios
+    .get(url)
+    .then((response: AxiosResponse) => {
+      return response.data;
+    })
+    .catch((error: any) => {
+      if (axios.isAxiosError(error) && error.response) {
+        throw new Error(
+          `${error.response.data.message || error.response.statusText}`,
+        );
+      } else {
+        throw new Error("Failed to get blog article: Network or server error");
+      }
+    });
+}
