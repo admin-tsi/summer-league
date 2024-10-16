@@ -8,6 +8,7 @@ import { Articles } from "@/lib/types/blog/blog";
 import React, { useEffect, useState } from "react";
 import { Matchs } from "@/lib/types/games/games";
 import { getTodayGame } from "@/lib/api/games/games";
+import FeaturedArticles from "@/components/home/featured-articles";
 
 const HomePage: React.FC = () => {
   const [headlines, setHeadlines] = useState<Articles | null>(null);
@@ -24,17 +25,14 @@ const HomePage: React.FC = () => {
           (competition) =>
             new Date(competition.createdAt).getFullYear() === currentYear
         );
-
         if (currentYearCompetition) {
           localStorage.setItem("competitionId", currentYearCompetition._id);
-
           setIsLoadingHeadlines(true);
           const headlinesData = await getAllBlogArticles(
             currentYearCompetition._id
           );
           setHeadlines(headlinesData);
           setIsLoadingHeadlines(false);
-
           setIsLoadingGames(true);
           const todayGamesData = await getTodayGame(currentYearCompetition._id);
           setTodayGames(todayGamesData);
@@ -46,7 +44,6 @@ const HomePage: React.FC = () => {
         setIsLoadingGames(false);
       }
     };
-
     fetchCompetitions();
   }, []);
 
@@ -55,6 +52,7 @@ const HomePage: React.FC = () => {
       <Hero headlines={headlines} isLoading={isLoadingHeadlines} />
       <MatchesList matches={todayGames} />
       <LatestNews />
+      <FeaturedArticles articles={headlines} loading={isLoadingHeadlines} />
     </div>
   );
 };

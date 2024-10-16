@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { usePathname } from "next/navigation";
 import logo from "@/public/logo.svg";
 import { getAllCompetition } from "@/lib/api/competition/competition";
 import { GamesResult } from "@/lib/types/games/games";
@@ -11,8 +12,13 @@ import { getAllGameResults } from "@/lib/api/games/games";
 const Header: React.FC = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [matchResult, setMatchResult] = useState<GamesResult | null>(null);
+  const pathname = usePathname();
 
-  const navItems = ["Schedules", "Teams", "Rankings"];
+  const navItems = [
+    { name: "Schedules", path: "/schedules" },
+    { name: "Teams", path: "/teams" },
+    { name: "Rankings", path: "/rankings" },
+  ];
 
   useEffect(() => {
     const fetchMatchResults = async () => {
@@ -22,7 +28,7 @@ const Header: React.FC = () => {
 
         const currentYearCompetition = competitions.find(
           (competition) =>
-            new Date(competition.createdAt).getFullYear() === currentYear
+            new Date(competition.createdAt).getFullYear() === currentYear,
         );
 
         if (currentYearCompetition) {
@@ -37,6 +43,8 @@ const Header: React.FC = () => {
 
     fetchMatchResults();
   }, []);
+
+  const isActive = (path: string) => pathname === path;
 
   return (
     <header className="sticky top-0 z-50 shadow-md">
@@ -53,12 +61,14 @@ const Header: React.FC = () => {
 
           <ul className="hidden md:flex md:space-x-8 lg:space-x-16 font-semibold">
             {navItems.map((item) => (
-              <li key={item}>
+              <li key={item.name}>
                 <Link
-                  href={`/${item.toLowerCase()}`}
-                  className="hover:underline"
+                  href={item.path}
+                  className={`hover:underline ${
+                    isActive(item.path) ? "underline" : ""
+                  }`}
                 >
-                  {item}
+                  {item.name}
                 </Link>
               </li>
             ))}
@@ -106,13 +116,17 @@ const Header: React.FC = () => {
           <div className="md:hidden mt-4">
             <ul className="flex flex-col space-y-2 font-semibold">
               {navItems.map((item) => (
-                <li key={item}>
+                <li key={item.name}>
                   <Link
-                    href={`/${item.toLowerCase()}`}
-                    className="block py-2 px-4 hover:bg-secondary hover:text-border"
+                    href={item.path}
+                    className={`block py-2 px-4 hover:bg-secondary hover:text-border ${
+                      isActive(item.path)
+                        ? "bg-secondary text-primary"
+                        : "text-secondary"
+                    }`}
                     onClick={() => setMobileMenuOpen(false)}
                   >
-                    {item}
+                    {item.name}
                   </Link>
                 </li>
               ))}

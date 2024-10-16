@@ -95,12 +95,6 @@ const Page: React.FC<PageProps> = ({ params }) => {
         <TabsList className="w-full flex justify-start items-center bg-background rounded-none shadow-md">
           <div className="w-full container mx-auto">
             <TabsTrigger
-              value="players"
-              className="data-[state=active]:border-b-4 rounded-none shadow-none"
-            >
-              Players
-            </TabsTrigger>
-            <TabsTrigger
               value="stats"
               className="data-[state=active]:border-b-4 rounded-none shadow-none"
             >
@@ -109,9 +103,6 @@ const Page: React.FC<PageProps> = ({ params }) => {
           </div>
         </TabsList>
         <div className="container mx-auto mt-8">
-          <TabsContent value="players">
-            {renderContent("Team Players", <PlayerTable players={players} />)}
-          </TabsContent>
           <TabsContent value="stats" className="grid grid-cols-1 gap-4">
             {renderContent(
               "Player Statistics",
