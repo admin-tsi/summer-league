@@ -4,12 +4,14 @@ import mediaday from "../../public/mediaday.jpg";
 import SocialLinks from "./social-links";
 import Headlines from "./headlines";
 import { Articles } from "@/lib/types/blog/blog";
+import { Skeleton } from "@/components/ui/skeleton";
 
 type Props = {
   headlines: Articles | null;
+  isLoading: boolean;
 };
 
-function Hero({ headlines }: Props) {
+function Hero({ headlines, isLoading }: Props) {
   return (
     <div className="w-full container mx-auto pt-12 flex flex-col md:flex-row gap-2">
       <div className="h-[70vh] w-full md:w-2/3 relative rounded-md">
@@ -31,7 +33,11 @@ function Hero({ headlines }: Props) {
       </div>
       <div className="w-full md:w-1/3 h-fit md:h-[70vh] flex flex-col gap-3">
         <SocialLinks />
-        <Headlines headlines={headlines} />
+        {isLoading ? (
+          <Skeleton className="w-full h-[calc(70vh-40px)] rounded-md" />
+        ) : (
+          <Headlines headlines={headlines} />
+        )}
       </div>
     </div>
   );
