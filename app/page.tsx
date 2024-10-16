@@ -13,44 +13,46 @@ import FeaturedArticles from "@/components/home/featured-articles";
 const HomePage: React.FC = () => {
   const [headlines, setHeadlines] = useState<Articles | null>(null);
   const [todayGames, setTodayGames] = useState<Matchs | null>(null);
-  const [loading, setLoading] = useState(true);
+  const [isLoadingHeadlines, setIsLoadingHeadlines] = useState(true);
+  const [isLoadingGames, setIsLoadingGames] = useState(true);
 
   useEffect(() => {
     const fetchCompetitions = async () => {
       try {
         const competitions = await getAllCompetition();
         const currentYear = new Date().getFullYear();
-
         const currentYearCompetition = competitions.find(
           (competition) =>
-            new Date(competition.createdAt).getFullYear() === currentYear,
+            new Date(competition.createdAt).getFullYear() === currentYear
         );
-
         if (currentYearCompetition) {
           localStorage.setItem("competitionId", currentYearCompetition._id);
-          const headlines = await getAllBlogArticles(
-            currentYearCompetition._id,
+          setIsLoadingHeadlines(true);
+          const headlinesData = await getAllBlogArticles(
+            currentYearCompetition._id
           );
-          const todayGames = await getTodayGame(currentYearCompetition._id);
-          setHeadlines(headlines);
-          setTodayGames(todayGames);
+          setHeadlines(headlinesData);
+          setIsLoadingHeadlines(false);
+          setIsLoadingGames(true);
+          const todayGamesData = await getTodayGame(currentYearCompetition._id);
+          setTodayGames(todayGamesData);
+          setIsLoadingGames(false);
         }
       } catch (error) {
         console.error("Error fetching data:", error);
-      } finally {
-        setLoading(false);
+        setIsLoadingHeadlines(false);
+        setIsLoadingGames(false);
       }
     };
-
     fetchCompetitions();
   }, []);
 
   return (
     <div className="bg-background text-foreground min-h-screen">
-      <Hero headlines={headlines} />
+      <Hero headlines={headlines} isLoading={isLoadingHeadlines} />
       <MatchesList matches={todayGames} />
       <LatestNews />
-      <FeaturedArticles articles={headlines} loading={loading} />
+      <FeaturedArticles articles={headlines} loading={isLoadingHeadlines} />
     </div>
   );
 };
