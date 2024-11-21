@@ -1,7 +1,6 @@
 "use client";
 import React, { useEffect, useState, useCallback } from "react";
 import { BasketballTeamStats, Player } from "@/lib/types/players/players";
-import PlayerTable from "@/components/teams/playerTable";
 import {
   getPlayerStats,
   getSpecificTeamPlayer,
@@ -9,7 +8,6 @@ import {
 import { getTeamStats } from "@/lib/api/teams/teams";
 import Image from "next/image";
 import img from "../../../public/basketball.jpg";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import TableSkeleton from "@/components/home/skeleton/table-skeleton";
 import { TeamStats } from "@/lib/types/teams/teams";
 import TeamStatsTable from "@/components/teams/teamStatsTable";
@@ -26,7 +24,7 @@ const Page: React.FC<PageProps> = ({ params }) => {
   const [players, setPlayers] = useState<Player[]>([]);
   const [teamStats, setTeamStats] = useState<TeamStats | null>(null);
   const [playerStats, setPlayerStats] = useState<BasketballTeamStats | null>(
-    null
+    null,
   );
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -91,26 +89,21 @@ const Page: React.FC<PageProps> = ({ params }) => {
           </div>
         </div>
       </div>
-      <Tabs defaultValue="players" className="w-full">
-        <TabsList className="w-full flex justify-start items-center bg-background rounded-none shadow-md">
-          <div className="w-full container mx-auto">
-            <TabsTrigger
-              value="stats"
-              className="data-[state=active]:border-b-4 rounded-none shadow-none"
-            >
-              Team Stats
-            </TabsTrigger>
+      <div className="w-full">
+        <div className="w-full bg-background shadow-md">
+          <div className="container mx-auto">
+            <div className="py-2 px-4 font-semibold">Team Stats</div>
           </div>
-        </TabsList>
+        </div>
         <div className="container mx-auto mt-8">
-          <TabsContent value="stats" className="grid grid-cols-1 gap-4">
+          <div className="grid grid-cols-1 gap-4">
             {renderContent(
               "Player Statistics",
               playerStats ? (
                 <PlayerStatsTable playerStats={playerStats} />
               ) : (
                 <p>No player statistics available.</p>
-              )
+              ),
             )}
             {renderContent(
               "Team Statistics",
@@ -118,11 +111,11 @@ const Page: React.FC<PageProps> = ({ params }) => {
                 <TeamStatsTable stats={teamStats} />
               ) : (
                 <p>No team statistics available.</p>
-              )
+              ),
             )}
-          </TabsContent>
+          </div>
         </div>
-      </Tabs>
+      </div>
     </div>
   );
 };
