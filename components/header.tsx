@@ -24,12 +24,13 @@ const Header: React.FC = () => {
     const fetchMatchResults = async () => {
       try {
         const competitions = await getAllCompetition();
-        const currentYear = new Date().getFullYear();
+        const currentYearCompetition = competitions[0];
+        /*  const currentYear = new Date().getFullYear();
 
         const currentYearCompetition = competitions.find(
           (competition) =>
             new Date(competition.createdAt).getFullYear() === currentYear,
-        );
+        );*/
 
         if (currentYearCompetition) {
           localStorage.setItem("competitionId", currentYearCompetition._id);

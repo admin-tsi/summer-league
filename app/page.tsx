@@ -20,16 +20,18 @@ const HomePage: React.FC = () => {
     const fetchCompetitions = async () => {
       try {
         const competitions = await getAllCompetition();
-        const currentYear = new Date().getFullYear();
+        console.log(competitions);
+        const currentYearCompetition = competitions[0];
+        /*     const currentYear = new Date().getFullYear();
         const currentYearCompetition = competitions.find(
           (competition) =>
-            new Date(competition.createdAt).getFullYear() === currentYear
-        );
+            new Date(competition.createdAt).getFullYear() === currentYear,
+        );*/
         if (currentYearCompetition) {
           localStorage.setItem("competitionId", currentYearCompetition._id);
           setIsLoadingHeadlines(true);
           const headlinesData = await getAllBlogArticles(
-            currentYearCompetition._id
+            currentYearCompetition._id,
           );
           setHeadlines(headlinesData);
           setIsLoadingHeadlines(false);
