@@ -13,7 +13,7 @@ import {
 } from "lucide-react";
 import { getAllCompetition } from "@/lib/api/competition/competition";
 import { getAllGameResults } from "@/lib/api/games/games";
-import { getGirlsTeamRanking, getBoysTeamRanking } from "@/lib/api/team/team";
+import { getTeamRankingGirls, getTeamRankingBoys } from "@/lib/api/team/team";
 
 type GameResult = {
   matchScore: {
@@ -55,8 +55,8 @@ const EpicStats2024: React.FC = () => {
         if (competition2024) {
           const [gamesData, boysData, girlsData] = await Promise.all([
             getAllGameResults(competition2024._id),
-            getBoysTeamRanking(competition2024._id),
-            getGirlsTeamRanking(competition2024._id)
+            getTeamRankingBoys(competition2024._id),
+            getTeamRankingGirls(competition2024._id)
           ]);
 
           // Calcul des statistiques

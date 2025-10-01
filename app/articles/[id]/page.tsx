@@ -178,8 +178,8 @@ export default function ArticleDetailPage({
             <div className="space-y-6">
               {article.content
                 .split('\n\n')
-                .filter(paragraph => paragraph.trim())
-                .map((paragraph, index) => (
+                .filter((paragraph: string) => paragraph.trim())
+                .map((paragraph: string, index: number) => (
                   <p key={index} className="text-lg leading-relaxed text-foreground">
                     {paragraph.trim()}
                   </p>

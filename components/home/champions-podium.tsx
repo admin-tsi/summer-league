@@ -4,7 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Trophy, Medal, Award, TrendingUp } from "lucide-react";
 import { getAllCompetition } from "@/lib/api/competition/competition";
-import { getGirlsTeamRanking, getBoysTeamRanking } from "@/lib/api/team/team";
+import { getTeamRankingGirls, getTeamRankingBoys } from "@/lib/api/team/team";
 
 type TeamRanking = {
   teamId: {
@@ -40,8 +40,8 @@ const ChampionsPodium: React.FC = () => {
 
         if (competition2024) {
           const [boysData, girlsData] = await Promise.all([
-            getBoysTeamRanking(competition2024._id),
-            getGirlsTeamRanking(competition2024._id)
+            getTeamRankingBoys(competition2024._id),
+            getTeamRankingGirls(competition2024._id)
           ]);
 
           setBoysRankings(boysData.slice(0, 3));
