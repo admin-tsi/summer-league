@@ -13,6 +13,7 @@ const nextConfig = {
       "web.facebook.com",
       "s3-alpha-sig.figma.com",
       "cdn.pixabay.com",
+      "res.cloudinary.com",
     ],
     remotePatterns: [
       {

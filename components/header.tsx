@@ -24,17 +24,15 @@ const Header: React.FC = () => {
     const fetchMatchResults = async () => {
       try {
         const competitions = await getAllCompetition();
-        const currentYearCompetition = competitions[0];
-        /*  const currentYear = new Date().getFullYear();
-
-        const currentYearCompetition = competitions.find(
+        // Force utilisation de la compétition 2024 (saison terminée)
+        const competition2024 = competitions.find(
           (competition) =>
-            new Date(competition.createdAt).getFullYear() === currentYear,
-        );*/
+            new Date(competition.createdAt).getFullYear() === 2024,
+        );
 
-        if (currentYearCompetition) {
-          localStorage.setItem("competitionId", currentYearCompetition._id);
-          const result = await getAllGameResults(currentYearCompetition._id);
+        if (competition2024) {
+          localStorage.setItem("competitionId", competition2024._id);
+          const result = await getAllGameResults(competition2024._id);
           setMatchResult(result);
         }
       } catch (error) {
